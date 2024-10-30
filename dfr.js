@@ -2,21 +2,21 @@ const fs = require("fs");
 
 function fileExists(filename) {
 
-  return !fs.existsSync(filename) ? false : true
+  return !fs.existsSync(filename) ? false : true;
 
 }
 
 function validNumber(value) {
 
-  return /^-?\d*\.?\d+$/.test(value.toString())
+  return /^-?\d*\.?\d+$/.test(value.toString());
 
 }
 
 function dataDimensions(dataframe) {
 
   //Initialize rows and cols to -1, indicating an invalid or empty dataframe
-  let rows = -1
-  let cols = -1
+  let rows = -1;
+  let cols = -1;
   
   //Check if the dataframe is defined and not empty
   if (!(dataframe == undefined)) {
@@ -30,10 +30,10 @@ function dataDimensions(dataframe) {
       //If the first element is not an array, it's not a valid 2D array, so cols remain -1
       cols = -1;
       //Sets the number of columns based on the length of the first row
-    } else {cols = dataframe[0].length}
+    } else {cols = dataframe[0].length};
   }
   
-  return [rows, cols]
+  return [rows, cols];
 
 }
 
@@ -44,7 +44,7 @@ function findTotal(dataset) {
   //Check if the input is a valid array and not empty
   if (!Array.isArray(dataset) || dataset.length === 0) {
     //If not a valid array or it is empty then it returns 0
-    return 0
+    return 0;
   }
   
   //Iterates through each elemnent in the data set 
@@ -62,23 +62,23 @@ function findTotal(dataset) {
 
 function calculateMean(dataset){
 
-  let total = 0
-  let amount = 0
+  let total = 0;
+  let amount = 0;
 
   //Filters the data set in to a new array by valids numbers and calls the pass float function on each element
-  const validNumbers = dataset.filter(validNumber).map(parseFloat)
+  const validNumbers = dataset.filter(validNumber).map(parseFloat);
 
-  total = findTotal(validNumbers)
+  total = findTotal(validNumbers);
 
-  amount = validNumbers.length
+  amount = validNumbers.length;
 
   //If amount has a value greater than 0 it calculates the average, if not returns 0
-  return (amount > 0 ? total / amount : 0)
+  return (amount > 0 ? total / amount : 0);
 
 }
 
 function calculateMedian(dataset) {
-  
+
   //Filters the data set in to a new array by valids numbers and calls the pass float function on each element
   const validNumbers = dataset.filter(validNumber).map(parseFloat);
   
@@ -88,41 +88,37 @@ function calculateMedian(dataset) {
   }
   
   //Sorts valid numbers in ascending order 
-  validNumbers.sort((a, b) => a - b)
+  validNumbers.sort((a, b) => a - b);
 
   //Finds the middle index of the valid numbers data
   const midIndex = Math.floor(validNumbers.length / 2);
 
-  //Finds whether there is an odd or even amount of elements
-  return validNumbers.length % 2 === 0
-    //If an even number it finds the mid value between the two middle values
-    ? (validNumbers[midIndex - 1] + validNumbers[midIndex]) / 2
-    //If an odd number the mid index is the median
-    : validNumbers[midIndex];
+  //Finds whether there is an odd or even amount of elements, if an even number it finds the mid value between the two middle values, if an odd number the mid index is the median
+  return validNumbers.length % 2 === 0 ? (validNumbers[midIndex - 1] + validNumbers[midIndex]) / 2 : validNumbers[midIndex];
 
 }
 
 function convertToNumber(dataframe, col) {
   
-  let count = 0
+  let count = 0;
   
   for (let i = 0; i < dataframe.length; i++) {
     //Checks if the value in the specified column and current row is valid and a string
     if (validNumber(dataframe[i][col]) && typeof(dataframe[i][col]) == 'string') {
       //If both true then it runs the parse float function on the element
-      dataframe[i][col] = parseFloat(dataframe[i][col])
+      dataframe[i][col] = parseFloat(dataframe[i][col]);
       //Increments the count
-      count ++
+      count ++;
     }
   }
   
-  return count
+  return count;
 
 }
 
 function flatten(dataframe) {
   
-  let newArray = []
+  let newArray = [];
   
   //Checks that the first row has only one column
   if (dataframe[0].length == 1){
@@ -136,7 +132,7 @@ function flatten(dataframe) {
     }
   }
   
-  return(newArray)
+  return(newArray);
 
 }
 
